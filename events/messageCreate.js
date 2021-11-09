@@ -3,8 +3,7 @@ module.exports = {
 	name: 'messageCreate',
 	execute(msg) {
 		const prefix = process.env.PREFIX;
-    	if(msg.author.bot) return ; // send by bot itself
-		if(!msg.content.startsWith(prefix)) return ;
+    	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; // send by bot itself or invalid prefix
 
 		const command = msg.content.slice(prefix.length).trim().split(/ +/);
 		const commandName = command.shift().toLowerCase();
