@@ -1,19 +1,19 @@
 require("dotenv").config();
 module.exports = {
 	name: 'messageCreate',
-	execute(msg) {
+	execute(msg, client) {
 		const prefix = process.env.PREFIX;
     	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; // send by bot itself or invalid prefix
 
 		const args = msg.content.slice(prefix.length).trim().split(/ +/);
-		const command = command.shift().toLowerCase();
+		const commandName = args.shift().toLowerCase();
 
-		if(!client.commands.has(command)) return ; // invalid command
+		if(!client.commands.has(commandName)) return ; // invalid command
 
-		if(command.length === 0) return ;
+		const command = client.commands.get(commandName);
 
 		try{
-			command.execute(msg, args);
+			command.execute(msg, args, client);
 		}catch(err){
 			console.log(err);
 		}
