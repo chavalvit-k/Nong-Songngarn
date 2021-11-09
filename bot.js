@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fs = require("fs");
+const mongoose = require("mongoose");
 const {Intents} = require("discord.js");
 const client = new Discord.Client({
     intents: [
@@ -27,5 +28,14 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args, client));
 	}
 }
+
+mongoose.connect(process.env.DB_SRV, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+}).then(() => {
+	console.log("Connected to the database");
+}).catch((err) => {
+	console.log(err);
+});
 
 client.login(process.env.TOKEN);
