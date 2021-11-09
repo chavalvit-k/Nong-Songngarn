@@ -1,7 +1,8 @@
+require("dotenv").config();
 module.exports = {
 	name: 'messageCreate',
 	execute(msg) {
-		let prefix = '.';
+		const prefix = process.env.PREFIX;
     	if(msg.author.bot) return ; // send by bot itself
 		if(!msg.content.startsWith(prefix)) return ;
 
