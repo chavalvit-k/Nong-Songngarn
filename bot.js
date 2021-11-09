@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fs = require("fs");
 const {Intents} = require("discord.js");
 const client = new Discord.Client({
     intents: [
@@ -6,10 +7,17 @@ const client = new Discord.Client({
         Intents.FLAGS.GUILD_MESSAGES
     ]
 });
-const fs = require("fs");
 require("dotenv").config();
 
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js')); // read JS file in events folder 
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); 	// read JS file in commands folder 
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js')); 	// read JS file in events folder 
+
+for (const file of commandFiles) {					// set command to client.command
+	const command = require(`.commands/${file}`);
+	client.commands.set(command.name, command);
+}
 
 for (const file of eventFiles) {
 	const event = require(`./events/${file}`);
