@@ -6,7 +6,7 @@ module.exports = {
     	if(msg.author.bot) return ; // send by bot itself
 		if(!msg.content.startsWith(prefix)) return ;
 
-		const command = msg.content.slice(prefix.length).trim().split(" ");
+		const command = msg.content.slice(prefix.length).trim().split(/ +/);
 		const commandName = command.shift().toLowerCase();
 
 		if(command.length === 0) return ;
