@@ -6,7 +6,7 @@ module.exports = {
     	if(msg.author.bot) return ; // send by bot itself
 		if(!msg.content.startsWith(prefix)) return ;
 
-		const command = msg.content.slice(prefix.length).trim().split(" ");
+		const command = msg.content.slice(prefix.length).trim().split(/ +/);
 		const commandName = command.shift().toLowerCase();
 
 		if(command.length === 0) return ;
@@ -38,7 +38,7 @@ module.exports = {
 					msg.reply("สวัสดีวันอาทิตย์ ใช้ชีวิตไม่ต้องหรูหรา พอดีในสิ่งที่ตัวเราสร้างมา เจอคนที่รักและห่วงใยกันเท่านั้นพอ");
 					break;
 				default:
-					msg.reply("ซาหวาดดีค้าบเชี่ยวชาญ");		
+					msg.reply("สวัสดีครับ");		
 			}	
 		}
 
