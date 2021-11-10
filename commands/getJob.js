@@ -6,12 +6,12 @@ module.exports = {
     async execute(msg, args) {
 		let jobData;
 		try {
-			jobData = await jobModel.findOne({ jobName: args })
+			jobData = await jobModel.findOne({ jobName: args });
 			//console.log(jobData);
 		}catch(err){
 			console.log(err);
 		}
         if(!jobData) msg.channel.send("invalid data ไอ้โง่");
-        else msg.reply(`${jobData._id} ${jobData.jobId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
+        else msg.reply(`${jobData.jobId} ${jobData.serverId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
     }
 }
