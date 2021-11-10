@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 module.exports = {
 	name: 'messageCreate',
 	execute(msg, client) {
@@ -11,7 +12,7 @@ module.exports = {
 		if(!client.commands.has(commandName)) return ; // invalid command
 
 		const command = client.commands.get(commandName);
-
+		
 		try{
 			command.execute(msg, args, client);
 		}catch(err){
