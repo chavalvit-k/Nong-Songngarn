@@ -12,6 +12,6 @@ module.exports = {
 			console.log(err);
 		}
         if(!jobData) msg.channel.send("invalid data ไอ้โง่");
-        msg.reply(`${jobData._id} ${jobData.jobId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
+        else msg.reply(`${jobData._id} ${jobData.jobId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
     }
 }
