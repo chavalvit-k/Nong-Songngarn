@@ -4,18 +4,13 @@ module.exports = {
     name: "delete",
     description: "delete job",
     async execute(msg, args) {
-		let jobData;
-		try {
-			jobData = await jobModel.findOne({ jobId: args })
-			//console.log(jobData);
-		}catch(err){
-			console.log(err);
-		}
-        if(!jobData || args.length != 1) {
+		let job;
+		job = await jobModel.findOne({ jobId: args })
+        if(!job || args.length != 1) {
             msg.reply("Invalid Id");
             return;
         } 
-        jobData.deleteOne({});
-        msg.reply(`Job ${jobData.jobName} has been deleted`);
+        job.deleteOne({});
+        msg.reply(`Job ${job.jobName} has been deleted`);
     }
 };
