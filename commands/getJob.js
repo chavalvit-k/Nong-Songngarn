@@ -4,14 +4,22 @@ module.exports = {
     name: "get",
     description: "get job",
     async execute(msg, args) {
-		let jobData;
+		let job;
 		try {
-			jobData = await jobModel.findOne({ jobName: args });
-			//console.log(jobData);
+			job = await jobModel.find({});
+		//	console.log(job);
 		}catch(err){
 			console.log(err);
 		}
-        if(!jobData) msg.channel.send("Invalid data. Please type valid ");
-        else msg.reply(`${jobData.jobId} ${jobData.serverId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
+        if(!job) msg.reply.send("Invalid data. Please type valid ");
+        //else msg.reply(`${jobData.jobId} ${jobData.serverId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
+		//else msg.reply(jobData);
+		else{
+			lists = "**Job lists**\n";
+			for(let i=0 ; i<job.length ; i++){
+				lists += `id: ${job[i].jobId}\nname: ${job[i].jobName}\ndeadline: ${job[i].jobDeadlineDay}\n\n`;				
+			}
+			msg.reply(lists);
+		}
     }
 }
