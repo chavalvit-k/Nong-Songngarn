@@ -1,5 +1,3 @@
-const jobModel = require("../models/schema");
-
 module.exports = {
     name: "add",
     description: "add job",
