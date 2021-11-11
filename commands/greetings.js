@@ -2,7 +2,7 @@ module.exports = {
     name: "สวัสดี",
     description: "greetings",
     execute(msg, args){
-        if(args.length == 1){
+        if(args.length === 1){
             switch (args[0]){
                 case "วันจันทร์":
                     msg.reply("สวัสดีวันจันทร์ ขอให้มีความรักล้นเทในหัวใจ เริ่มต้นสัปดาห์อย่างสดชื่นแจ่มใสไปด้วยกัน");
