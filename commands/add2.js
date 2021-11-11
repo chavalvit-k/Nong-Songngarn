@@ -36,7 +36,14 @@ module.exports = {
                 return ;
             }
 
-            if(hour) deadlineDate.setHours(hour); 
+            if(hour){
+                if(hour < 1 || hour > 23){
+                    msg.reply(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`)
+                    client.commands.get("add2").execute(name, author, client);
+                    return ;
+                }
+                deadlineDate.setHours(hour);  
+            }
             deadlineDate = deadlineDate.toString();
 
             // get latest id

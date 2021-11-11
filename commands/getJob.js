@@ -1,7 +1,7 @@
 const jobModel = require("../models/schema");
 
 module.exports = {
-    name: "ดูงาน",
+    name: "get",
     description: "get job",
     async execute(msg, args) {
 		let jobData;
@@ -11,7 +11,7 @@ module.exports = {
 		}catch(err){
 			console.log(err);
 		}
-        if(!jobData) msg.channel.send("invalid data ไอ้โง่");
+        if(!jobData) msg.channel.send("Invalid data. Please type valid ");
         else msg.reply(`${jobData.jobId} ${jobData.serverId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
     }
 }
