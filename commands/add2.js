@@ -1,19 +1,23 @@
 const jobModel = require("../models/schema");
 
 module.exports = {
-    name: "add",
-    description: "add job",
-    execute(guild, args, client) {
-        let name = args.join(" ");  // job name
-		if(typeof name !== "string" || name.length < 0){
-			msg.reply("Invalid Job Name");
-            return ;
-		}
-        // const author = client.user.tag;
-        // console.log(author);
-        client.once("messageCreate", async (msg, client) => {
-            if(msg.author.bot) return ;
-        //    console.log(msg.author.tag);
+    name: "add2",
+    description: "chain command from add.js",
+    execute(name, author, client){
+        client.once("messageCreate", async (msg) => {
+            // console.log(msg.author.tag);
+           
+            if(msg.content === "cancel"){;
+                msg.reply("You exit this command.");
+                return ;
+            }
+
+            // message did not send by command initiator
+            if(msg.author.tag !== author){
+                client.commands.get("add2").execute(name, author, client);
+                return ;
+            }
+
             let deadline = msg.content;
             deadline = deadline.split(" ");
             let day = deadline[0]; 
@@ -27,7 +31,8 @@ module.exports = {
             let deadlineDate = new Date(dayFormated); 
 
             if(deadlineDate.toString() === "Invalid Date"){
-                msg.reply("Invalid Date. Please type in this form DD/MM/YYYY");
+                msg.reply(`Invalid date. Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
+                client.commands.get("add2").execute(name, author, client);
                 return ;
             }
 
@@ -42,14 +47,14 @@ module.exports = {
 
             let job = await jobModel.create({
                 jobId: latestId + 1,
-                serverId: guild.id,
+                serverId: msg.guild.id,
                 jobName: name,
                 jobDeadlineDay: deadlineDate
             })
-            job.save();
-            msg.reply(`Create job ${job.jobName} completed deadline on ${job.jobDeadlineDay}.`);
+        job.save();
+        msg.reply(`Create job ${job.jobName} completed deadline on ${job.jobDeadlineDay}.`);
             
         })
 
     }
-};
+}
