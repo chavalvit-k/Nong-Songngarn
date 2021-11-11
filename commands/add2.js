@@ -44,7 +44,6 @@ module.exports = {
                 }
                 deadlineDate.setHours(hour);  
             }
-            deadlineDate = deadlineDate.toString();
 
             // get latest id
             let latestId = (await jobModel.find().sort({"_id": -1}).limit(1)); 
@@ -59,7 +58,7 @@ module.exports = {
                 jobDeadlineDay: deadlineDate
             })
         job.save();
-        msg.reply(`Create job ${job.jobName} completed deadline on ${job.jobDeadlineDay}.`);
+        msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${job.jobDeadlineDay}.`);
             
         })
 
