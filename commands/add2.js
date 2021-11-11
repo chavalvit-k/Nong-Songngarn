@@ -7,21 +7,21 @@ module.exports = {
         client.once("messageCreate", async (msg) => {
             // console.log(msg.author.tag);
            
-            if(msg.content === "cancel"){;
-                msg.reply("You exit this command.");
-                return ;
-            }
-
             // message did not send by command initiator
             if(msg.author.tag !== author){
                 client.commands.get("add2").execute(name, author, client);
                 return ;
             }
 
+            if(msg.content === "cancel"){;
+                msg.reply("You exit this command.");
+                return ;
+            }
+
             let deadline = msg.content;
             deadline = deadline.split(" ");
             let day = deadline[0]; 
-            let hour = deadline[1]; // optional
+            let hour = Number(deadline[1]); // optional
         
             if(day.includes("/")) day = day.split("/");               
             else if(day.includes("-")) day = day.split("-");
@@ -37,7 +37,7 @@ module.exports = {
             }
 
             if(hour){
-                if(hour < 1 || hour > 23){
+                if(!Number.isInteger(hour) || hour < 1 || hour > 23){
                     msg.reply(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`)
                     client.commands.get("add2").execute(name, author, client);
                     return ;

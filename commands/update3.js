@@ -36,9 +36,10 @@ module.exports = {
                     client.commands.get("update3").execute(id, num, author, client);
                     return ;
                 }
-
+                
+                hour = Number(hour);
                 if(hour){
-                    if(hour < 1 || hour > 23){
+                    if(!Number.isInteger(hour) || hour < 1 || hour > 23){
                         msg.reply(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`)
                         client.commands.get("update3").execute(id, num, author, client);
                         return ;

@@ -22,13 +22,15 @@ module.exports = {
                 return ;
             }
 
-            if(num === 1) msg.reply(`Type data in this format: <name>.`);
-            else if(num === 2) msg.reply(`Type data in this format: <deadline_day>.`);
-            else if(num === 3) msg.reply(`Type data in this format: <deadline_hour>.`);
-            else if(num === 4) msg.reply(`Type data in this format: <name> <deadline_day>.`);
-            else if(num === 5) msg.reply(`Type data in this format: <name> <deadline_hour>.`);
-            else if(num === 6) msg.reply(`Type data in this format: <deadline_day> <deadline_hour>.`);
-            else if(num === 7) msg.reply(`Type data in this format: <name> <deadline_day> <deadline_hour>.`);
+            const info = `\nYou can type "cancel" to exit this command.`;
+
+            if(num === 1) msg.reply(`Type data in this format: <name> ${info}`);
+            else if(num === 2) msg.reply(`Type data in this format: <deadline_day> ${info}`);
+            else if(num === 3) msg.reply(`Type data in this format: <deadline_hour> ${info}`);
+            else if(num === 4) msg.reply(`Type data in this format: <name> <deadline_day> ${info}`);
+            else if(num === 5) msg.reply(`Type data in this format: <name> <deadline_hour> ${info}`);
+            else if(num === 6) msg.reply(`Type data in this format: <deadline_day> <deadline_hour> ${info}`);
+            else if(num === 7) msg.reply(`Type data in this format: <name> <deadline_day> <deadline_hour> ${info}`);
             
             client.commands.get("update3").execute(id, num, author, client);
 

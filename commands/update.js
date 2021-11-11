@@ -1,11 +1,15 @@
+const jobModel = require("../models/schema");
+
 module.exports = {
     name: "update",
     description: "update job",
-    execute(msg, args, client) {
+    async execute(msg, args, client) {
 
-        let id = args;  // job name
+        let id = args;
         id = Number(id);
-		if(!id || id.length < 0){
+        let job = await jobModel.findOne({jobId: id});
+        
+		if(!job || !id || id.length < 0){
 			msg.reply("Invalid Job Id");
             return ;
 		}

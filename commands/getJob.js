@@ -5,15 +5,8 @@ module.exports = {
     description: "get job",
     async execute(msg, args) {
 		let job;
-		try {
-			job = await jobModel.find({});
-		//	console.log(job);
-		}catch(err){
-			console.log(err);
-		}
+		job = await jobModel.find({});
         if(!job) msg.reply.send("Invalid data. Please type valid ");
-        //else msg.reply(`${jobData.jobId} ${jobData.serverId} ${jobData.jobName} ${jobData.jobDeadlineDay}`);
-		//else msg.reply(jobData);
 		else{
 			lists = "**Job lists**\n";
 			for(let i=0 ; i<job.length ; i++){
