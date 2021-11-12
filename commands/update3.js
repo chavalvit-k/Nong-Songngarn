@@ -1,4 +1,5 @@
 const jobModel = require("../models/schema");
+const parseDateString = require("../utils/parseDateString");
 
 module.exports = {
     name: "update3",
@@ -21,7 +22,7 @@ module.exports = {
             data = data.split(" ");
 
             async function name(name) {
-                await jobModel.updateOne({jobId: id}, {$set: {jobName: name}});
+                await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: name}});
             }
             
             async function date(day, hour) {
@@ -46,7 +47,7 @@ module.exports = {
                     }
                     deadlineDate.setHours(hour);  
                 }
-                await jobModel.updateOne({jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
+                await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
             }
 
             switch(num) {
@@ -73,8 +74,9 @@ module.exports = {
                     break;
             
             } 
-            let job = await jobModel.findOne({jobId: id});
-            msg.reply(`Update job completed!\nName: ${job.jobName}\nDeadline: ${new Date(job.jobDeadlineDay).toString()}.`);  
+            let job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
+            let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
+            msg.reply(`Update job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);  
         })
     }
 }

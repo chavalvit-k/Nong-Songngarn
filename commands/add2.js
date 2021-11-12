@@ -1,4 +1,5 @@
 const jobModel = require("../models/schema");
+const parseDateString = require("../utils/parseDateString");
 
 module.exports = {
     name: "add2",
@@ -46,7 +47,8 @@ module.exports = {
             }
 
             // get latest id
-            let latestId = (await jobModel.find().sort({"_id": -1}).limit(1)); 
+           // let serverJob = await jobModel.find({serverId: msg.guild.id});
+            let latestId = (await jobModel.find({serverId: msg.guild.id}).sort({"_id": -1}).limit(1)); 
 
             if(latestId.length === 0) latestId = 0;
             else latestId = latestId[0].jobId;
@@ -58,7 +60,8 @@ module.exports = {
                 jobDeadlineDay: deadlineDate.getTime()
             })
         job.save();
-        msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${new Date(job.jobDeadlineDay).toString()}.`);
+        let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
+        msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
             
         })
 

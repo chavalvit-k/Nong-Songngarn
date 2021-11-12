@@ -7,7 +7,7 @@ module.exports = {
 
         let id = args;
         id = Number(id);
-        let job = await jobModel.findOne({jobId: id});
+        let job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
         
 		if(!job || !id || id.length < 0){
 			msg.reply("Invalid Job Id");

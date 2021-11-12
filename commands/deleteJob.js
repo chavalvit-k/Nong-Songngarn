@@ -5,7 +5,7 @@ module.exports = {
     description: "delete job",
     async execute(msg, args) {
 		let job;
-		job = await jobModel.findOne({ jobId: args })
+		job = await jobModel.findOne({serverId: msg.guild.id, jobId: args })
         if(!job || args.length != 1) {
             msg.reply("Invalid Id");
             return;
