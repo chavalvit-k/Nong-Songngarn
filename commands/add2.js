@@ -46,8 +46,6 @@ module.exports = {
                 deadlineDate.setHours(hour);  
             }
 
-            // get latest id
-           // let serverJob = await jobModel.find({serverId: msg.guild.id});
             let latestId = (await jobModel.find({serverId: msg.guild.id}).sort({"_id": -1}).limit(1)); 
 
             if(latestId.length === 0) latestId = 0;
