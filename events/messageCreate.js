@@ -4,6 +4,7 @@ module.exports = {
 	name: 'messageCreate',
 	execute(msg, client) {
 		//msg.channel.send("hello");
+		
 		const prefix = process.env.PREFIX;
     	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; // send by bot or invalid prefix
 
