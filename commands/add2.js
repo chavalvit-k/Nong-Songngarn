@@ -55,10 +55,10 @@ module.exports = {
                 jobId: latestId + 1,
                 serverId: msg.guild.id,
                 jobName: name,
-                jobDeadlineDay: deadlineDate
+                jobDeadlineDay: deadlineDate.getTime()
             })
         job.save();
-        msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${job.jobDeadlineDay}.`);
+        msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${new Date(job.jobDeadlineDay).toString()}.`);
             
         })
 

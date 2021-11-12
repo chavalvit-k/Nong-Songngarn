@@ -46,7 +46,7 @@ module.exports = {
                     }
                     deadlineDate.setHours(hour);  
                 }
-                await jobModel.updateOne({jobId: id}, {$set: {jobDeadlineDay: deadlineDate}});
+                await jobModel.updateOne({jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
             }
 
             switch(num) {
@@ -74,7 +74,7 @@ module.exports = {
             
             } 
             let job = await jobModel.findOne({jobId: id});
-            msg.reply(`Update job completed!\nName: ${job.jobName}\nDeadline: ${job.jobDeadlineDay}.`);  
+            msg.reply(`Update job completed!\nName: ${job.jobName}\nDeadline: ${new Date(job.jobDeadlineDay).toString()}.`);  
         })
     }
 }

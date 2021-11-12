@@ -6,23 +6,18 @@ module.exports = {
     description: "get job",
     async execute(msg, args, client) {
 		let job;
-		let now = new Date();
+		let now = new Date().getTime();
 		let nextTime;
-		let nextDate;
 		let newArgs = args[0];
-
-		console.log(newArgs);
+		const author = msg.author.tag;
 
 		if(msg.content === "cancel"){;
 			msg.reply("You exit this command.");
 			return ;
 		}
+
 		if(!["all", "day", "week"].includes(newArgs)){
-			msg.reply(`Please type day / week / all to get job lists\nYou can type "cancel" to exit this command.`);
-			client.once("messageCreate", (msg) => {
-				args = msg.content;
-				client.commands.get("get").execute(msg, args, client);
-			})
+			msg.reply(`Invalid argument. Please type day / week / all to get job lists`);
 			return ;
 		}
 		
@@ -30,24 +25,20 @@ module.exports = {
 			job = await jobModel.find({});
 		}
 		else if(newArgs === "day"){
-			nextTime = now.getTime() + 86400000;
-			nextDate = new Date(nextTime);
-			job = await jobModel.find({jobDeadlineDay: { $gte: nextDate }});
+			nextTime = now + 86400000;
+			job = await jobModel.find({jobDeadlineDay: { $lte: nextTime }});
 		}
 		else if(newArgs === "week"){
-			nextTime = now.getTime() + 604800000;
-			nextDate = new Date(nextTime);
-			job = await jobModel.find({jobDeadlineDay: { $gte: nextDate }});
+			nextTime = now + 604800000;
+			job = await jobModel.find({jobDeadlineDay: { $lte: nextTime }});
 		}
 
-		console.log(job);
-
-		lists = "**Job lists**\n";
+		lists = `**Job lists**\n`;
 		for(let i=0 ; i<job.length ; i++){
-			let jobTime = parseDateString(job[i].jobDeadlineDay);
+			let jobTime = parseDateString(new Date(job[i].jobDeadlineDay).toString());
 			lists += `id: ${job[i].jobId}\nname: ${job[i].jobName}\ndeadline: ${jobTime}\n\n`;				
 		}
-		msg.reply(lists);
+		msg.reply(lists); 
 		
     }
 }
