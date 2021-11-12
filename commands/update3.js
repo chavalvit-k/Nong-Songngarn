@@ -72,7 +72,7 @@ module.exports = {
                 case 7:
                     name(data[0]), date(data[1], data[2]);
                     break;
-            
+          
             } 
             let job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
             let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
