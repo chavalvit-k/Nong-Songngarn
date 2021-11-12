@@ -11,6 +11,7 @@ const client = new Discord.Client({
 require("dotenv").config();
 
 client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); 	// read JS file in commands folder 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js')); 	// read JS file in events folder 
