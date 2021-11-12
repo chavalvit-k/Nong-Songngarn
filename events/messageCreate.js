@@ -5,11 +5,6 @@ module.exports = {
 	execute(msg, client) {
 		//msg.channel.send("hello");
 
-		if(msg.content === "ใครเป็นคนสร้างมึงวะ"){
-			msg.reply("โยรักตอง");
-			return ;
-		}
-
 		const prefix = process.env.PREFIX;
     	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; // send by bot or invalid prefix
 
