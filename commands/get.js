@@ -25,12 +25,13 @@ module.exports = {
 			job = await jobModel.find({});
 		}
 		else if(newArgs === "day"){
-			nextTime = now + 86400000;
+			nextTime = now + 86400000 - (now % 86400000) - 25200001; // day: 86400000 7hrs+1ms: 25200001
 			job = await jobModel.find({jobDeadlineDay: { $lte: nextTime }});
 		}
 		else if(newArgs === "week"){
-			nextTime = now + 604800000;
+			nextTime = now + 604800000 - (now % 604800000) - 259200000  - 25200001; // week: 604800000 3days: 259200000 7hrs+1ms: 25200001
 			job = await jobModel.find({jobDeadlineDay: { $lte: nextTime }});
+			console.log(new Date(nextTime).toString());
 		}
 
 		lists = `**Job lists**\n`;
