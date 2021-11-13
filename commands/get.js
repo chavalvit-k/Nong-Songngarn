@@ -22,15 +22,15 @@ module.exports = {
 		}
 		
 		if(newArgs === "all"){
-			job = await jobModel.find({serverId: msg.guild.id});
+			job = await jobModel.find({serverId: msg.guild.id}).sort({"jobDeadlineDay": 1});;
 		}
 		else if(newArgs === "day"){
 			nextTime = now + 86400000 - (now % 86400000) - 25200001; // day: 86400000 7hrs+1ms: 25200001
-			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }});
+			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }}).sort({"jobDeadlineDay": 1});;
 		}
 		else if(newArgs === "week"){
 			nextTime = now + 604800000 - (now % 604800000) - 259200000  - 25200001; // week: 604800000 3days: 259200000 7hrs+1ms: 25200001
-			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }});
+			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }}).sort({"jobDeadlineDay": 1});;
 		}
 
 		lists = `**Job lists**\n`;
