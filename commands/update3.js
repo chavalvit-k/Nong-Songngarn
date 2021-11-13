@@ -1,5 +1,6 @@
 const jobModel = require("../models/schema");
 const parseDateString = require("../utils/parseDateString");
+const updateId = require("../utils/updateId");
 
 module.exports = {
     name: "update3",
@@ -120,6 +121,8 @@ module.exports = {
                 let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
                 msg.reply(`Update job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
             }
+            
+        updateId(msg.guild.id);
         })
     }
 }

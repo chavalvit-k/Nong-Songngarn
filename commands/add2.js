@@ -1,5 +1,6 @@
 const jobModel = require("../models/schema");
 const parseDateString = require("../utils/parseDateString");
+const updateId = require("../utils/updateId");
 
 module.exports = {
     name: "add2",
@@ -12,7 +13,7 @@ module.exports = {
                 client.commands.get("add2").execute(name, author, client);
                 return ;
             }
-          
+            
             // user use another command
             if(msg.content.includes("-")) return ;
 
@@ -20,7 +21,7 @@ module.exports = {
                 msg.reply("You exit this command.");
                 return ;
             }
-
+         
             let deadline = msg.content;
             deadline = deadline.split(" ");
             let day = deadline[0]; 
@@ -59,10 +60,12 @@ module.exports = {
                 jobName: name,
                 jobDeadlineDay: deadlineDate.getTime()
             })
-        job.save();
-        let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
-        msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
-            
+
+            job.save();
+            let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
+            msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+
+            updateId(msg.guild.id);    
         })
 
     }
