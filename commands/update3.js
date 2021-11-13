@@ -1,41 +1,47 @@
+const { MessageEmbed } = require('discord.js');
 const jobModel = require("../models/schema");
 const parseDateString = require("../utils/parseDateString");
 const updateId = require("../utils/updateId");
 
 module.exports = {
-    name: "update3",
+    name: "update_chain_3",
     description: "chain command from update2.js",
     execute(id, num, author, client){
         client.once("messageCreate", async (msg) => {
-
+            const embed = new MessageEmbed().setColor("#add79b");
             // message did not send by command initiator
             if(msg.author.tag !== author){
-                client.commands.get("update3").execute(id, num, author, client);
+                client.commands.get("update_chain_3").execute(id, num, author, client);
                 return ;
             }
 
             // user use another command
             if(msg.content.includes("-")) return ;
 
-            if(msg.content === "cancel"){;
-                msg.reply("You exit this command.");
+            if(msg.content === "cancel") {
+                embed.setDescription("You exit this command.");
+                msg.reply({ embeds: [embed] });
                 return ;
             }
 
             let data = msg.content;
             data = data.split(",");
             if(data.length - 1 !== Math.floor((num-1)/3)) {
-                msg.reply(`Invalid format.\nYou can type "cancel" to exit this command.`);
-                client.commands.get("update3").execute(id, num, author, client);
+                embed.setDescription(`Invalid format.\nYou can type "cancel" to exit this command.`);
+                msg.reply({ embeds: [embed] });
+                client.commands.get("update_chain_3").execute(id, num, author, client);
                 return ;
             }
 
             let check = 1;
+            let newName;
             function name(name) {
+                newName = name;
                 name = Number(name);
                 if(Number.isInteger(name)) {
-                    msg.reply(`Invalid name. Name must contain at least 1 character.\nYou can type "cancel" to exit this command.`);
-                    client.commands.get("update3").execute(id, num, author, client);
+                    embed.setDescription(`Invalid name. Name must contain at least 1 character.\nYou can type "cancel" to exit this command.`);
+                    msg.reply({ embeds: [embed] });
+                    client.commands.get("update_chain_3").execute(id, num, author, client);
                     check = 0;
                     return ;
                 }
@@ -50,8 +56,9 @@ module.exports = {
                 deadlineDate = new Date(dayFormated); 
 
                 if(deadlineDate.toString() === "Invalid Date"){
-                    msg.reply(`Invalid date. Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
-                    client.commands.get("update3").execute(id, num, author, client);
+                    embed.setDescription(`Invalid date. Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
+                    msg.reply({ embeds: [embed] });
+                    client.commands.get("update_chain_3").execute(id, num, author, client);
                     check = 0;
                     return ;
                 }
@@ -59,8 +66,9 @@ module.exports = {
                 hour = Number(hour);
                 if(hour){
                     if(!Number.isInteger(hour) || hour < 1 || hour > 23){
-                        msg.reply(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`)
-                        client.commands.get("update3").execute(id, num, author, client);
+                        embed.setDescription(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`);
+                        msg.reply({ embeds: [embed] });
+                        client.commands.get("update_chain_3").execute(id, num, author, client);
                         check = 0;
                         return ;
                     }
@@ -72,7 +80,7 @@ module.exports = {
                 case 1:
                     name(data[0]);
                     if(check) {
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: name}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
                     }
                     break;
                 case 2:
@@ -90,14 +98,14 @@ module.exports = {
                 case 4:
                     name(data[0]), date(data[1], 0);
                     if(check) {
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: name}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
                     }
                     break;
                 case 5:
                     name(data[0]), date(0, data[1]);
                     if(check) {
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: name}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
                     }
                     break;
@@ -110,7 +118,7 @@ module.exports = {
                 case 7:
                     name(data[0]), date(data[1], data[2]);
                     if(check) {
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: name}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
                     }
                     break;
@@ -119,7 +127,8 @@ module.exports = {
             if(check) {
                 let job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
                 let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
-                msg.reply(`Update job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+                embed.setDescription(`Update job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+                msg.reply({ embeds: [embed] });
             }
             
         updateId(msg.guild.id);

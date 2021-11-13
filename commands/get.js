@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const jobModel = require("../models/schema");
 const parseDateString = require("../utils/parseDateString");
 
@@ -5,18 +6,21 @@ module.exports = {
     name: "get",
     description: "get job",
     async execute(msg, args, client) {
+		const embed = new MessageEmbed().setColor("#add79b");
 		let job;
 		let now = new Date().getTime();
 		let nextTime;
 		let newArgs = args[0];
 
-		if(msg.content === "cancel"){;
-			msg.reply("You exit this command.");
+		if(msg.content === "cancel") {
+			embed.setDescription("You exit this command.");
+        	msg.reply({ embeds: [embed] });
 			return ;
 		}
 
 		if(!["all", "day", "week"].includes(newArgs)){
-			msg.reply(`Invalid argument. Please type day / week / all to get job lists`);
+			embed.setDescription(`Invalid argument. Please type day / week / all to get job lists`);
+        	msg.reply({ embeds: [embed] });
 			return ;
 		}
 		
@@ -37,7 +41,8 @@ module.exports = {
 			let jobTime = parseDateString(new Date(job[i].jobDeadlineDay).toString());
 			lists += `id: ${job[i].jobId}\nname: ${job[i].jobName}\ndeadline: ${jobTime}\n\n`;				
 		}
-		msg.reply(lists); 
+		embed.setDescription(lists);
+        msg.reply({ embeds: [embed] });
 		
     }
 }

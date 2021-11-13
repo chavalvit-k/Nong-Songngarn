@@ -4,11 +4,11 @@ module.exports = {
     name: "embed",
     description: "test embed",
     execute(msg, client){
-        const exampleEmbed = new MessageEmbed();
+        const embed = new MessageEmbed().setColor("#add79b");
         if(msg.content === "something"){
-            exampleEmbed.setDescription("Tong Auan!");
+            embed.setDescription("Tong Auan!");
         }
 
-        msg.reply({ embeds: [exampleEmbed] });
+        msg.reply({ embeds: [embed] });
     }
 }

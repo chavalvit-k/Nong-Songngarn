@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const jobModel = require("../models/schema");
 
 module.exports = {
@@ -5,6 +6,7 @@ module.exports = {
     description: "add job",
     async execute(msg, args, client) {
 
+        const embed = new MessageEmbed().setColor("#add79b");
         let name = args.join(" ");  // job name
         let job = await jobModel.find({serverId: msg.guild.id});
         let jobName = [];
@@ -14,17 +16,20 @@ module.exports = {
             jobName.push(job[i].jobName);
         }
         if(jobName.includes(name)){
-            msg.reply("This name has already used");
+            embed.setDescription("This name has already used");
+            msg.reply({ embeds: [embed] });
             return ;
         }
 
 		if(typeof name !== "string" || name.length < 0){
-			msg.reply("Invalid Job Name");
+            embed.setDescription("Invalid Job Name");
+            msg.reply({ embeds: [embed] });
             return ;
 		}
 
-        msg.reply(`Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
-        client.commands.get("add2").execute(name, author, client);      
+        embed.setDescription(`Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
+        msg.reply({ embeds: [embed] });
+        client.commands.get("add_chain_2").execute(name, author, client);      
     }
 
 };

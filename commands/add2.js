@@ -1,24 +1,27 @@
+const { MessageEmbed } = require('discord.js');
 const jobModel = require("../models/schema");
 const parseDateString = require("../utils/parseDateString");
 const updateId = require("../utils/updateId");
 
 module.exports = {
-    name: "add2",
+    name: "add_chain_2",
     description: "chain command from add.js",
     execute(name, author, client){
         client.once("messageCreate", async (msg) => {
+            const embed = new MessageEmbed().setColor("#add79b");
 
             // message did not send by command initiator
             if(msg.author.tag !== author){
-                client.commands.get("add2").execute(name, author, client);
+                client.commands.get("add_chain_2").execute(name, author, client);
                 return ;
             }
             
             // user use another command
             if(msg.content.includes("-")) return ;
 
-            if(msg.content === "cancel"){;
-                msg.reply("You exit this command.");
+            if(msg.content === "cancel") {
+                embed.setDescription("You exit this command.");
+                msg.reply({ embeds: [embed] });
                 return ;
             }
          
@@ -35,21 +38,23 @@ module.exports = {
             let deadlineDate = new Date(dayFormated); 
 
             if(deadlineDate.toString() === "Invalid Date"){
-                msg.reply(`Invalid date. Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
-                client.commands.get("add2").execute(name, author, client);
+                embed.setDescription(`Invalid date. Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
+                msg.reply({ embeds: [embed] });
+                client.commands.get("add_chain_2").execute(name, author, client);
                 return ;
             }
 
             if(hour){
                 if(!Number.isInteger(hour) || hour < 1 || hour > 23){
-                    msg.reply(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`)
-                    client.commands.get("add2").execute(name, author, client);
+                    embed.setDescription(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`);
+                    msg.reply({ embeds: [embed] });
+                    client.commands.get("add_chain_2").execute(name, author, client);
                     return ;
                 }
                 deadlineDate.setHours(hour);  
             }
 
-            let latestId = (await jobModel.find({serverId: msg.guild.id}).sort({"_id": -1}).limit(1)); 
+            let latestId = await jobModel.find({serverId: msg.guild.id}).sort({"_id": -1}).limit(1); 
 
             if(latestId.length === 0) latestId = 0;
             else latestId = latestId[0].jobId;
@@ -63,7 +68,8 @@ module.exports = {
 
             job.save();
             let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
-            msg.reply(`Create job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+            embed.setDescription(`Create job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+            msg.reply({ embeds: [embed] });
 
             updateId(msg.guild.id);    
         })
