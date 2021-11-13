@@ -10,6 +10,9 @@ module.exports = {
                 return ;
             }
 
+            // user use another command
+            if(msg.content.includes("-")) return ;
+
             if(msg.content === "cancel"){;
                 msg.reply("You exit this command.");
                 return ;

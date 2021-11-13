@@ -6,13 +6,15 @@ module.exports = {
     description: "chain command from add.js",
     execute(name, author, client){
         client.once("messageCreate", async (msg) => {
-            // console.log(msg.author.tag);
-           
+
             // message did not send by command initiator
             if(msg.author.tag !== author){
                 client.commands.get("add2").execute(name, author, client);
                 return ;
             }
+          
+            // user use another command
+            if(msg.content.includes("-")) return ;
 
             if(msg.content === "cancel"){;
                 msg.reply("You exit this command.");
