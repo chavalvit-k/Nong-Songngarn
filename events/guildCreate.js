@@ -4,5 +4,6 @@ module.exports = {
 		console.log(`${client.user.tag} has logged in to ${guild.name}!`);
 		const channel = guild.channels.cache.find(channel => channel.type === 'GUILD_TEXT');
     	channel.send("สวัสดีครับ");
+		client.commands.get("help-init").execute(guild); 
 	}
 }
