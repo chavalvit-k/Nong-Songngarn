@@ -23,9 +23,9 @@ module.exports = {
             }
 
             let data = msg.content;
-            data = data.split(":");
+            data = data.split(",");
             if(data.length - 1 !== Math.floor((num-1)/3)) {
-                msg.reply(`มึงพิมพ์ : เกินไอ้ห่า`);
+                msg.reply(`Invalid format.\nYou can type "cancel" to exit this command.`);
                 client.commands.get("update3").execute(id, num, author, client);
                 return ;
             }
