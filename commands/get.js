@@ -9,7 +9,6 @@ module.exports = {
 		let now = new Date().getTime();
 		let nextTime;
 		let newArgs = args[0];
-		const author = msg.author.tag;
 
 		if(msg.content === "cancel"){;
 			msg.reply("You exit this command.");
