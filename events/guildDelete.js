@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const jobModel = require("../models/schema");
 const prefixModel = require("../models/prefix.js");
 
 module.exports = {
@@ -8,6 +9,8 @@ module.exports = {
 
         prefix = await prefixModel.findOne({serverId: guild.id});
         prefix.deleteOne({});
+
+        await jobModel.deleteMany({serverId: guild.id});
 
 		// const embed = new MessageEmbed().setDescription(`**เตะกูทำเหี้ยไรไอ้สัส เดี๋ยวมึงเจอกูแน่!**`)
 		// const channel = client.channels.cache.find(channel => channel.type === 'GUILD_TEXT');
