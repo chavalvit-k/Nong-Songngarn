@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const jobModel = require("../models/schema/");
+const jobModel = require("../models/schema");
 
 module.exports = {
     name: "add",

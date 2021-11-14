@@ -1,8 +1,8 @@
-const prefixModel = require("../models/prefix/");
+const prefixModel = require("../models/prefix");
 
 module.exports = {
 	name: 'messageCreate',
-	execute(msg, client) {
+	async execute(msg, client) {
 
 		let serverPrefix = await prefixModel.find({serverId: msg.guild.id})
 		const prefix = serverPrefix.prefix;
