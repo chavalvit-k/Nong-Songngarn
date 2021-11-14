@@ -5,7 +5,7 @@ module.exports = {
     name: "help",
     description: "help document",
     execute(msg){
-        const embed = new MessageEmbed().setDescription(helpInformation);
+        const embed = new MessageEmbed().setColor("#add79b").setDescription(helpInformation);
         msg.reply({ embeds: [embed] });
     }
 }
