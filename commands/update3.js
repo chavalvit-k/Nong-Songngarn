@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const jobModel = require("../models/schema");
+const msToDate = require('../utils/msToDate');
 const parseDateString = require("../utils/parseDateString");
 const updateId = require("../utils/updateId");
 
@@ -76,6 +77,9 @@ module.exports = {
                 }
             }
 
+            let job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
+            let day = msToDate(job.jobDeadlineDay);
+
             switch(num) {
                 case 1:
                     name(data[0]);
@@ -90,7 +94,7 @@ module.exports = {
                     }
                     break;
                 case 3:
-                    date(0, data[0]);
+                    date(day, data[0]);
                     if(check) {
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
                     }
@@ -103,7 +107,7 @@ module.exports = {
                     }
                     break;
                 case 5:
-                    name(data[0]), date(0, data[1]);
+                    name(data[0]), date(day, data[1]);
                     if(check) {
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
@@ -125,7 +129,7 @@ module.exports = {
           
             } 
             if(check) {
-                let job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
+                job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
                 let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
                 embed.setDescription(`Update job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
                 msg.reply({ embeds: [embed] });

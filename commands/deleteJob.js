@@ -29,7 +29,8 @@ module.exports = {
             msg.reply({ embeds: [embed] });
 
             updateId(msg.guild.id);
-        } else {
+        } 
+        else {
             embed.setDescription("You can't send this command because you don't have the right permissions");
             msg.reply({ embeds: [embed] });
         }

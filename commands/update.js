@@ -22,7 +22,8 @@ module.exports = {
     
             const author = msg.author.tag;
             client.commands.get("update_chain_2").execute(id, author, client); 
-        } else {
+        } 
+        else {
             embed.setDescription("You can't send this command because you don't have the right permissions");
             msg.reply({ embeds: [embed] });
         }

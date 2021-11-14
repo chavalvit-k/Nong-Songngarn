@@ -30,7 +30,8 @@ module.exports = {
             embed.setDescription(`Please type date in this format: <dd/mm/yyyy> <hour>\n**<hour> is optional\n\nYou can type "cancel" to exit this command.`);
             msg.reply({ embeds: [embed] });
             client.commands.get("add_chain_2").execute(name, author, client);      
-        } else {
+        } 
+        else {
             embed.setDescription("You can't send this command because you don't have the right permissions");
             msg.reply({ embeds: [embed] });
         }
