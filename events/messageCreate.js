@@ -1,11 +1,12 @@
-require("dotenv").config();
+const prefixModel = require("../models/prefix/");
 
 module.exports = {
 	name: 'messageCreate',
 	execute(msg, client) {
-		//msg.channel.send("hello");
-		
-		const prefix = process.env.PREFIX;
+
+		let serverPrefix = await prefixModel.find({serverId: msg.guild.id})
+		const prefix = serverPrefix.prefix;
+
     	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; // send by bot or invalid prefix
 
 		const args = msg.content.slice(prefix.length).trim().split(/ +/);
