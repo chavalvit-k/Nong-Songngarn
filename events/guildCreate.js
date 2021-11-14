@@ -14,7 +14,7 @@ module.exports = {
 		serverPrefix.save();
 
 		const help = await helpInformation(guild.id);
-		const embed = new MessageEmbed().setDescription(`**สวัสดีจ้าา น้องส่งงานมาแล้ววว**\n\n${help}`)
+		const embed = new MessageEmbed().setColor("#add79b").setDescription(`**สวัสดีจ้าา น้องส่งงานมาแล้ววว**\n\n${help}`)
 		const channel = guild.channels.cache.find(channel => channel.type === 'GUILD_TEXT');
 
 		channel.send({ embeds: [embed] });
