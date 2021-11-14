@@ -65,8 +65,8 @@ module.exports = {
                 jobName: name,
                 jobDeadlineDay: deadlineDate.getTime()
             })
-
             job.save();
+            
             let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
             embed.setDescription(`Create job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
             msg.reply({ embeds: [embed] });

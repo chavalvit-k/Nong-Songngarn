@@ -7,13 +7,13 @@ module.exports = {
 	async execute(guild, client) {
 		console.log(`${client.user.tag} has logged in to ${guild.name}!`);
 
-		let prefix = await prefixModel.create({
+		let serverPrefix = await prefixModel.create({
 			serverId: guild.id,
 			prefix: "-"
 		});
-		prefix.save();
+		serverPrefix.save();
 
-		const help = helpInformation(guild.id);
+		const help = await helpInformation(guild.id);
 		const embed = new MessageEmbed().setDescription(`**สวัสดีจ้าา น้องส่งงานมาแล้ววว**\n\n${help}`)
 		const channel = guild.channels.cache.find(channel => channel.type === 'GUILD_TEXT');
 

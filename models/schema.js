@@ -9,4 +9,4 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("jobModel", schema);
 
-module.exports = model
+module.exports = model;

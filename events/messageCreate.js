@@ -4,7 +4,7 @@ module.exports = {
 	name: 'messageCreate',
 	async execute(msg, client) {
 
-		let serverPrefix = await prefixModel.find({serverId: msg.guild.id})
+		let serverPrefix = await prefixModel.find({serverId: msg.guild.id});
 		const prefix = serverPrefix.prefix;
 
     	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; // send by bot or invalid prefix
