@@ -5,7 +5,8 @@ module.exports = {
     name: "help",
     description: "help document",
     execute(msg){
-        const embed = new MessageEmbed().setDescription(helpInformation);
+        const help = helpInformation(msg.guild.id);
+        const embed = new MessageEmbed().setDescription(help);
         msg.reply({ embeds: [embed] });
     }
 }
