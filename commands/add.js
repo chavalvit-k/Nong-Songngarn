@@ -27,7 +27,7 @@ module.exports = {
                 return ;
             }
 
-            embed.setDescription(`Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
+            embed.setDescription(`Please type date in this format: <dd/mm/yyyy> <hour>\n**<hour> is optional\n\nYou can type "cancel" to exit this command.`);
             msg.reply({ embeds: [embed] });
             client.commands.get("add_chain_2").execute(name, author, client);      
         } else {

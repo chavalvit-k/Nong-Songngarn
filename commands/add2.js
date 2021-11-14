@@ -38,7 +38,7 @@ module.exports = {
             let deadlineDate = new Date(dayFormated); 
 
             if(deadlineDate.toString() === "Invalid Date"){
-                embed.setDescription(`Invalid date. Please type date in this format: DD/MM/YYYY\nYou can type "cancel" to exit this command.`);
+                embed.setDescription(`Invalid date.\nPlease type date in this format: <dd/mm/yyyy> <hour>\n**<hour> is optional\n\nYou can type "cancel" to exit this command.`);
                 msg.reply({ embeds: [embed] });
                 client.commands.get("add_chain_2").execute(name, author, client);
                 return ;
@@ -46,7 +46,7 @@ module.exports = {
 
             if(hour){
                 if(!Number.isInteger(hour) || hour < 1 || hour > 23){
-                    embed.setDescription(`Invalid hour. Please type hour in 1-23 range\nYou can type "cancel" to exit this command.`);
+                    embed.setDescription(`Invalid hour.\nPlease type hour in 1-23 range\n\nYou can type "cancel" to exit this command.`);
                     msg.reply({ embeds: [embed] });
                     client.commands.get("add_chain_2").execute(name, author, client);
                     return ;

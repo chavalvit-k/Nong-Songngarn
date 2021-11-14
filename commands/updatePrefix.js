@@ -21,11 +21,12 @@ module.exports = {
             return ;
         }
 
-        await prefixModel.updateOne({serverId: msg.guild.id}, {$set: {prefix: args}});
-        let serverPrefix = prefixModel.findOne({serverId: msg.guild.id});
-        const prefix = serverPrefix.prefix;
+        await prefixModel.updateOne({serverId: msg.guild.id}, {$set: {prefix: newPrefix}});
+        // let serverPrefix = prefixModel.findOne({serverId: msg.guild.id});
+        // console.log(serverPrefix);
+        // const prefix = serverPrefix.prefix;
 
-        embed.setDescription(`Update completed!\nChange prefix to "${prefix}"`);
+        embed.setDescription(`Update completed!\nChange prefix to "${newPrefix}"`);
         msg.reply({ embeds: [embed] });
     }
 }
