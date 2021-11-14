@@ -29,9 +29,8 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args, client));
 	}
 }
-// OTA2ODMzMjA5Mzk5MDYyNTI4.YYeYPQ.87URDGlK2EkpSPbEyKlWWAj-Vus
-// mongodb+srv://passa:ayxcrLxNw0aeTNmj@nong-songngarn.9wfyc.mongodb.net/BotDatabase?retryWrites=true&w=majority
-mongoose.connect("mongodb+srv://passa:ayxcrLxNw0aeTNmj@nong-songngarn.9wfyc.mongodb.net/BotDatabase?retryWrites=true&w=majority", {
+
+mongoose.connect(process.env.DB_SRV, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 }).then(() => {
@@ -40,4 +39,4 @@ mongoose.connect("mongodb+srv://passa:ayxcrLxNw0aeTNmj@nong-songngarn.9wfyc.mong
 	console.log(err);
 });
 
-client.login("OTA2ODMzMjA5Mzk5MDYyNTI4.YYeYPQ.87URDGlK2EkpSPbEyKlWWAj-Vus");
+client.login(process.env.TOKEN);
