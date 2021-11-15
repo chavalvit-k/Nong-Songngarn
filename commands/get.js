@@ -39,7 +39,7 @@ module.exports = {
 		lists = `**Job lists**\n\n`;
 		for(let i=0 ; i<job.length ; i++){
 			let jobTime = parseDateString(new Date(job[i].jobDeadlineDay).toString());
-			lists += `id: ${job[i].jobId}\nname: ${job[i].jobName}\ndeadline: ${jobTime}\n\n`;				
+			lists += `id: ${job[i].jobId}\nName: ${job[i].jobName}\nDeadline: ${jobTime}\n\n`;				
 		}
 		embed.setDescription(lists);
         msg.reply({ embeds: [embed] });

@@ -27,7 +27,7 @@ module.exports = {
 
             await job.deleteOne({});
             let jobTime = parseDateString(job.jobDeadline);
-            embed.setDescription(`Delete job completed!\n\nname: ${job.jobName}\ndeadline: ${jobTime}`);
+            embed.setDescription(`Delete job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
             msg.reply({ embeds: [embed] });
 
             updateId(msg.guild.id);

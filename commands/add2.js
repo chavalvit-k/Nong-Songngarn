@@ -68,7 +68,7 @@ module.exports = {
             job.save();
             
             let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
-            embed.setDescription(`Create job completed!\n\nname: ${job.jobName}\ndeadline: ${jobTime}`);
+            embed.setDescription(`Create job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
             msg.reply({ embeds: [embed] });
 
             updateId(msg.guild.id);    

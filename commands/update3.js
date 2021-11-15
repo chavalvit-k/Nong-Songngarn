@@ -131,7 +131,7 @@ module.exports = {
             if(check) {
                 job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
                 let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
-                embed.setDescription(`Update job completed!\n\nname: ${job.jobName}\ndeadline: ${jobTime}`);
+                embed.setDescription(`Update job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
                 msg.reply({ embeds: [embed] });
             }
             
