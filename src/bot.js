@@ -33,7 +33,7 @@ mongoose.connect(process.env.DB_SRV , {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 }).then(() => {
-	console.log("Connected to the database");
+	console.log("Connected to the database!");
 }).catch((err) => {
 	console.log(err);
 });
