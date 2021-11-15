@@ -17,7 +17,7 @@ module.exports = {
                 return ;
             }
     
-            embed.setDescription(`Type a number for select things to update.\n\n1. name\n2. deadline_day\n3. deadline_hour\n4. name / deadline_day\n5. name / deadline_hour\n6. deadline_day / deadline_hour\n7. name / deadline_day / deadline_hour\n\nYou can type "cancel" to exit this command.`);
+            embed.setDescription(`Type a number to select update format.\n\n1. name\n2. deadline_day\n3. deadline_hour\n4. name / deadline_day\n5. name / deadline_hour\n6. deadline_day / deadline_hour\n7. name / deadline_day / deadline_hour\n\nYou can type "cancel" to exit this command.`);
             msg.reply({ embeds: [embed] });
     
             const author = msg.author.tag;

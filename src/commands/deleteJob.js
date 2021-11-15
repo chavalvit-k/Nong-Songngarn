@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const jobModel = require("../models/schema");
+const parseDateString = require('../utils/parseDateString');
 const updateId = require('../utils/updateId');
 
 module.exports = {
@@ -25,7 +26,8 @@ module.exports = {
             }
 
             await job.deleteOne({});
-            embed.setDescription(`Job ${job.jobName} has been deleted`);
+            let jobTime = parseDateString(job.jobDeadline);
+            embed.setDescription(`Delete job completed!\n\nname: ${job.jobName}\ndeadline: ${jobTime}`);
             msg.reply({ embeds: [embed] });
 
             updateId(msg.guild.id);

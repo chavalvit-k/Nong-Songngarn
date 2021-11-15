@@ -29,7 +29,7 @@ module.exports = {
                 return ;
             }
 
-            const info = `\nYou can type "cancel" to exit this command.`;
+            const info = `\n\nYou can type "cancel" to exit this command.`;
 
             if(num === 1) {
                 embed.setDescription(`Type data in this format: <name> ${info}`);

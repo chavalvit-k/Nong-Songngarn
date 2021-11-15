@@ -19,7 +19,7 @@ module.exports = {
 		}
 
 		if(!["all", "day", "week"].includes(newArgs)){
-			embed.setDescription(`Invalid argument. Please type day / week / all to get job lists`);
+			embed.setDescription(`Invalid argument.\nPlease type day / week / all to get job lists`);
         	msg.reply({ embeds: [embed] });
 			return ;
 		}
@@ -36,7 +36,7 @@ module.exports = {
 			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }}).sort({"jobDeadlineDay": 1});;
 		}
 
-		lists = `**Job lists**\n`;
+		lists = `**Job lists**\n\n`;
 		for(let i=0 ; i<job.length ; i++){
 			let jobTime = parseDateString(new Date(job[i].jobDeadlineDay).toString());
 			lists += `id: ${job[i].jobId}\nname: ${job[i].jobName}\ndeadline: ${jobTime}\n\n`;				

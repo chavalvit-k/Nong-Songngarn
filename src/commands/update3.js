@@ -28,7 +28,7 @@ module.exports = {
             let data = msg.content;
             data = data.split(",");
             if(data.length - 1 !== Math.floor((num-1)/3)) {
-                embed.setDescription(`Invalid format.\nYou can type "cancel" to exit this command.`);
+                embed.setDescription(`Invalid format.\n\nYou can type "cancel" to exit this command.`);
                 msg.reply({ embeds: [embed] });
                 client.commands.get("update_chain_3").execute(id, num, author, client);
                 return ;
@@ -40,7 +40,7 @@ module.exports = {
                 newName = name;
                 name = Number(name);
                 if(Number.isInteger(name)) {
-                    embed.setDescription(`Invalid name. Name must contain at least 1 character.\nYou can type "cancel" to exit this command.`);
+                    embed.setDescription(`Invalid name.\nName must contain at least 1 character.\n\nYou can type "cancel" to exit this command.`);
                     msg.reply({ embeds: [embed] });
                     client.commands.get("update_chain_3").execute(id, num, author, client);
                     check = 0;
@@ -131,7 +131,7 @@ module.exports = {
             if(check) {
                 job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
                 let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
-                embed.setDescription(`Update job completed!\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+                embed.setDescription(`Update job completed!\n\nname: ${job.jobName}\ndeadline: ${jobTime}`);
                 msg.reply({ embeds: [embed] });
             }
             
