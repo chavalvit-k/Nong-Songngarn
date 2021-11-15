@@ -2,7 +2,7 @@
   "name": "discord-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "bot.js",
   "engines": {
     "node": "17.1",
     "npm": "*"
