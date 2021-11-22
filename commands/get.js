@@ -32,7 +32,7 @@ module.exports = {
 			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }}).sort({"jobDeadlineDay": 1});;
 		}
 		else if(newArgs === "week"){
-			if(now % 604800000 <= 259200000) nextTime = now + 1209600000 - (now % 604800000) - 259200000  - 25200001; // 2week: 604800000 3days: 259200000 7hrs+1ms: 25200001
+			if(now % 604800000 <= 345600000) nextTime = now + 1209600000 - (now % 604800000) - 259200000  - 25200001; // 2week: 604800000 3days: 259200000 7hrs+1ms: 25200001
 			else nextTime = now + 604800000 - (now % 604800000) - 259200000  - 25200001; // week: 604800000 3days: 259200000 7hrs+1ms: 25200001
 			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }}).sort({"jobDeadlineDay": 1});;
 		}
