@@ -8,15 +8,16 @@ module.exports = {
     name: "update_chain_3",
     description: "chain command from update2.js",
     execute(id, num, author, client){
+
         client.once("messageCreate", async (msg) => {
+
             const embed = new MessageEmbed().setColor("#add79b");
-            // message did not send by command initiator
+            
             if(msg.author.tag !== author){
                 client.commands.get("update_chain_3").execute(id, num, author, client);
                 return ;
             }
 
-            // user use another command
             if(msg.content.includes("-")) return ;
 
             if(msg.content === "cancel") {
@@ -27,6 +28,7 @@ module.exports = {
 
             let data = msg.content;
             data = data.split(",");
+
             if(data.length - 1 !== Math.floor((num-1)/3)) {
                 embed.setDescription(`Invalid format.\n\nYou can type "cancel" to exit this command.`);
                 msg.reply({ embeds: [embed] });
@@ -36,6 +38,7 @@ module.exports = {
 
             let check = 1;
             let newName;
+
             function name(name) {
                 newName = name;
                 name = Number(name);
@@ -49,6 +52,7 @@ module.exports = {
             }
             
             let dayFormated,  deadlineDate;
+
             function date(day, hour) {
                 if(day.includes("/")) day = day.split("/");               
                 else if(day.includes("-")) day = day.split("-");
@@ -78,7 +82,7 @@ module.exports = {
             }
 
             let job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
-            let day = msToDate(job.jobDeadlineDay);
+            let day = msToDate(job.jobDeadline);
 
             switch(num) {
                 case 1:
@@ -90,52 +94,55 @@ module.exports = {
                 case 2:
                     date(data[0], 0);
                     if(check) {
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadline: deadlineDate.getTime()}});
                     }
                     break;
                 case 3:
                     date(day, data[0]);
                     if(check) {
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadline: deadlineDate.getTime()}});
                     }
                     break;
                 case 4:
                     name(data[0]), date(data[1], 0);
                     if(check) {
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadline: deadlineDate.getTime()}});
                     }
                     break;
                 case 5:
                     name(data[0]), date(day, data[1]);
                     if(check) {
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadline: deadlineDate.getTime()}});
                     }
                     break;
                 case 6:
                     date(data[0], data[1]);
                     if(check) {
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadline: deadlineDate.getTime()}});
                     }
                     break;
                 case 7:
                     name(data[0]), date(data[1], data[2]);
                     if(check) {
                         await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobName: newName}});
-                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadlineDay: deadlineDate.getTime()}});
+                        await jobModel.updateOne({serverId: msg.guild.id, jobId: id}, {$set: {jobDeadline: deadlineDate.getTime()}});
                     }
                     break;
           
-            } 
+            }
+
             if(check) {
                 job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
-                let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
+                let jobTime = parseDateString(new Date(job.jobDeadline).toString());
                 embed.setDescription(`Update job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
                 msg.reply({ embeds: [embed] });
             }
             
         updateId(msg.guild.id);
+        
         })
+
     }
 }

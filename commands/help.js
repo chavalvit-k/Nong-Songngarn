@@ -7,6 +7,7 @@ module.exports = {
     async execute(msg){
 
         const help = await helpInformation(msg.guild.id);
+        
         const embed = new MessageEmbed().setColor("#add79b").setDescription(help);
         msg.reply({ embeds: [embed] });
 

@@ -5,8 +5,10 @@ const parseDateString = require("../utils/parseDateString");
 module.exports = {
     name: "get",
     description: "get job",
-    async execute(msg, args, client) {
+    async execute(msg, args) {
+
 		const embed = new MessageEmbed().setColor("#add79b");
+
 		let job;
 		let now = new Date().getTime();
 		let nextTime;
@@ -23,25 +25,33 @@ module.exports = {
         	msg.reply({ embeds: [embed] });
 			return ;
 		}
-		
+
+		// 25200001: 7 hrs
+		// 86400000: day
+		// 259200000: 3 days
+		// 345600000: 4 days
+		// 604800000: week
+		// 1209600000: 2 weeks
+
 		if(newArgs === "all"){
-			job = await jobModel.find({serverId: msg.guild.id}).sort({"jobDeadlineDay": 1});;
+			job = await jobModel.find({serverId: msg.guild.id}).sort({"jobDeadline": 1});;
 		}
 		else if(newArgs === "day"){
-			nextTime = now + 86400000 - (now % 86400000) - 25200001; // day: 86400000 7hrs+1ms: 25200001
-			job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }}).sort({"jobDeadlineDay": 1});;
+			nextTime = now + 86400000 - (now % 86400000) - 25200001;
+			job = await jobModel.find({serverId: msg.guild.id, jobDeadline: { $lte: nextTime }}).sort({"jobDeadline": 1});;
 		}
 		else if(newArgs === "week"){
-            if(now % 604800000 >= 345600000) nextTime = now + 1209600000 - (now % 604800000) - 259200000  - 25200001; // 2week: 604800000 3days: 259200000 7hrs+1ms: 25200001
-            else nextTime = now + 604800000 - (now % 604800000) - 259200000  - 25200001; // week: 604800000 3days: 259200000 7hrs+1ms: 25200001
-            job = await jobModel.find({serverId: msg.guild.id, jobDeadlineDay: { $lte: nextTime }}).sort({"jobDeadlineDay": 1});;
+            if(now % 604800000 >= 345600000) nextTime = now + 1209600000 - (now % 604800000) - 259200000  - 25200001;
+            else nextTime = now + 604800000 - (now % 604800000) - 259200000  - 25200001; 
+            job = await jobModel.find({serverId: msg.guild.id, jobDeadline: { $lte: nextTime }}).sort({"jobDeadline": 1});;
         }
 
-		lists = `**Job lists**\n\n`;
+		let lists = `**Job lists**\n\n`;
 		for(let i=0 ; i<job.length ; i++){
-			let jobTime = parseDateString(new Date(job[i].jobDeadlineDay).toString());
+			let jobTime = parseDateString(new Date(job[i].jobDeadline).toString());
 			lists += `id: ${job[i].jobId}\nName: ${job[i].jobName}\nDeadline: ${jobTime}\n\n`;				
 		}
+
 		embed.setDescription(lists);
         msg.reply({ embeds: [embed] });
 		

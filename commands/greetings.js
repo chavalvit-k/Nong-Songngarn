@@ -4,7 +4,9 @@ module.exports = {
     name: "สวัสดี",
     description: "greetings",
     execute(msg, args){
+
         const embed = new MessageEmbed().setColor("#add79b");
+
         if(args.length === 1){
             switch (args[0]){
                 case "วันจันทร์":
@@ -45,8 +47,9 @@ module.exports = {
             }
         }
         else{
-            embed.setDescription("สวัสดีครับ");
+            embed.setDescription("สวีดัดครับ แพ่ม่อ พ้องนี่ ไชทาว");
             msg.reply({ embeds: [embed] });
         }    
+
     }
 }

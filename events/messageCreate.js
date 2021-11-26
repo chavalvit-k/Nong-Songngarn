@@ -6,12 +6,12 @@ module.exports = {
 
 		let serverPrefix = await prefixModel.find({serverId: msg.guild.id});
 		const prefix = serverPrefix[0].prefix;
-    	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; // send by bot or invalid prefix
+    	if(msg.author.bot || !msg.content.startsWith(prefix)) return ; 
 
 		const args = msg.content.slice(prefix.length).trim().split(/ +/);
 		const commandName = args.shift().toLowerCase();
 
-		if(!client.commands.has(commandName)) return ; // invalid command
+		if(!client.commands.has(commandName)) return ;
 		const command = client.commands.get(commandName);
 		
 		try{

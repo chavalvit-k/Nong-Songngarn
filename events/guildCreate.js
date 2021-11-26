@@ -5,6 +5,7 @@ const prefixModel = require("../models/prefix.js");
 module.exports = {
 	name: 'guildCreate',
 	async execute(guild, client) {
+
 		console.log(`${client.user.tag} has logged in to ${guild.name}!`);
 
 		let serverPrefix = await prefixModel.create({
@@ -19,4 +20,5 @@ module.exports = {
 
 		channel.send({ embeds: [embed] });
 	}
+	
 }

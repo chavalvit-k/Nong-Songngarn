@@ -1,22 +1,25 @@
-module.exports = function parseDateString(ms){
+module.exports = function msToDate(ms){
 
     let dateString = new Date(ms).toString();
     dateString = dateString.split(" ");
 
-    if(dateString[1] === "Jan") dateString[1] = "01";
-    if(dateString[1] === "Feb") dateString[1] = "02";
-    if(dateString[1] === "Mar") dateString[1] = "03";
-    if(dateString[1] === "Jun") dateString[1] = "04";
-    if(dateString[1] === "May") dateString[1] = "05";
-    if(dateString[1] === "Jun") dateString[1] = "06";
-    if(dateString[1] === "Jul") dateString[1] = "07";
-    if(dateString[1] === "Aug") dateString[1] = "08";
-    if(dateString[1] === "Sep") dateString[1] = "09";
-    if(dateString[1] === "Oct") dateString[1] = "10";
-    if(dateString[1] === "Nov") dateString[1] = "11";
-    if(dateString[1] === "Dec") dateString[1] = "12";
+    let monthNum = dateString[1];
+    let date = dateString[2];
+    let year = dateString[3];
 
-    return `${dateString[2]}/${dateString[1]}/${dateString[3]}`;
+    if(monthNum === "Jan") monthNum = "01";
+    if(monthNum === "Feb") monthNum = "02";
+    if(monthNum === "Mar") monthNum = "03";
+    if(monthNum === "Jun") monthNum = "04";
+    if(monthNum === "May") monthNum = "05";
+    if(monthNum === "Jun") monthNum = "06";
+    if(monthNum === "Jul") monthNum = "07";
+    if(monthNum === "Aug") monthNum = "08";
+    if(monthNum === "Sep") monthNum = "09";
+    if(monthNum === "Oct") monthNum = "10";
+    if(monthNum === "Nov") monthNum = "11";
+    if(monthNum === "Dec") monthNum = "12";
+
+    return `${date}/${monthNum}/${year}`;
+
 }
-
-// [Thu, Nov, 11, 2021, 00:00:00, GMT+0700]

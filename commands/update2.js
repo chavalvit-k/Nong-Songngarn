@@ -4,15 +4,15 @@ module.exports = {
     name: "update_chain_2",
     description: "chain command from update.js",
     execute(id, author, client) {
+
         client.once("messageCreate", async (msg) => {
+
             const embed = new MessageEmbed().setColor("#add79b");
-            // message did not send by command initiator
             if(msg.author.tag !== author){
                 client.commands.get("update_chain_2").execute(id, author, client);
                 return ;
             }
 
-            // user use another command
             if(msg.content.includes("-")) return ;
 
             if(msg.content === "cancel") {
@@ -22,6 +22,7 @@ module.exports = {
             }
             
             let num = Number(msg.content);  
+            
             if(!Number.isInteger(num) || num<1 || num>7){
                 embed.setDescription("Invalid Job Id");
                 msg.reply({ embeds: [embed] });
@@ -63,5 +64,6 @@ module.exports = {
             client.commands.get("update_chain_3").execute(id, num, author, client);
 
         })
+
     }
 };

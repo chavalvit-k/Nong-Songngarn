@@ -7,16 +7,16 @@ module.exports = {
     name: "add_chain_2",
     description: "chain command from add.js",
     execute(name, author, client){
+
         client.once("messageCreate", async (msg) => {
+
             const embed = new MessageEmbed().setColor("#add79b");
 
-            // message did not send by command initiator
             if(msg.author.tag !== author){
                 client.commands.get("add_chain_2").execute(name, author, client);
                 return ;
             }
-            
-            // user use another command
+
             if(msg.content.includes("-")) return ;
 
             if(msg.content === "cancel") {
@@ -63,15 +63,16 @@ module.exports = {
                 jobId: latestId + 1,
                 serverId: msg.guild.id,
                 jobName: name,
-                jobDeadlineDay: deadlineDate.getTime()
+                jodDeadline: deadlineDate.getTime()
             })
             job.save();
             
-            let jobTime = parseDateString(new Date(job.jobDeadlineDay).toString());
+            let jobTime = parseDateString(new Date(job.jodDeadline).toString());
             embed.setDescription(`Create job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
             msg.reply({ embeds: [embed] });
 
             updateId(msg.guild.id);    
+
         })
 
     }
