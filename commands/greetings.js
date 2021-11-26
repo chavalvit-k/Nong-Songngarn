@@ -42,7 +42,7 @@ module.exports = {
                     msg.reply({ embeds: [embed] });
                     break;
                 default:
-                    embed.setDescription("สวัสดีครับ");
+                    embed.setDescription("สวีดัดครับ แพ่ม่อ พ้องนี่ ไชทาว");
                     msg.reply({ embeds: [embed] });
             }
         }
