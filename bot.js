@@ -8,6 +8,7 @@ const client = new Discord.Client({
         Intents.FLAGS.GUILD_MESSAGES
     ]
 });
+// require("dotenv").config();
 
 client.commands = new Discord.Collection();
 
