@@ -21,7 +21,7 @@ module.exports = {
 		}
 
 		if(!["all", "day", "week"].includes(newArgs)){
-			embed.setDescription(`Invalid argument.\nPlease type day / week / all to get job lists`);
+			embed.setDescription(`Invalid argument.\n\nPlease type day / week / all to get job lists`);
         	msg.reply({ embeds: [embed] });
 			return ;
 		}

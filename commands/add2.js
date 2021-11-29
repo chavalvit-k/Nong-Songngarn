@@ -27,18 +27,18 @@ module.exports = {
          
             let deadline = msg.content;
             deadline = deadline.split(" ");
+
             let day = deadline[0]; 
+            day = day.split("/"); 
+
             let hour = Number(deadline[1]); // optional
-        
-            if(day.includes("/")) day = day.split("/");               
-            else if(day.includes("-")) day = day.split("-");
 
             //  change format from dd/mm/yyyy to yyyy/mm/dd
             let dayFormated = `${day[2]} ${day[1]} ${day[0]}`; 
             let deadlineDate = new Date(dayFormated); 
 
             if(deadlineDate.toString() === "Invalid Date"){
-                embed.setDescription(`Invalid date.\nPlease type date in this format: <dd/mm/yyyy> <hour>\n**<hour> is optional\n\nYou can type "cancel" to exit this command.`);
+                embed.setDescription(`Invalid date.\n\nPlease type date in this format: <dd/mm/yyyy> <hour>\n**<hour> is optional\n\nYou can type "cancel" to exit this command.`);
                 msg.reply({ embeds: [embed] });
                 client.commands.get("add_chain_2").execute(name, author, client);
                 return ;
@@ -46,7 +46,7 @@ module.exports = {
 
             if(hour){
                 if(!Number.isInteger(hour) || hour < 1 || hour > 23){
-                    embed.setDescription(`Invalid hour.\nPlease type hour in 1-23 range\n\nYou can type "cancel" to exit this command.`);
+                    embed.setDescription(`Invalid hour.\n\nPlease type hour in 1-23 range\n\nYou can type "cancel" to exit this command.`);
                     msg.reply({ embeds: [embed] });
                     client.commands.get("add_chain_2").execute(name, author, client);
                     return ;
@@ -63,12 +63,13 @@ module.exports = {
                 jobId: latestId + 1,
                 serverId: msg.guild.id,
                 jobName: name,
-                jodDeadline: deadlineDate.getTime()
+                jobDeadline: deadlineDate.getTime()
             })
             job.save();
-            
-            let jobTime = parseDateString(new Date(job.jodDeadline).toString());
-            embed.setDescription(`Create job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+
+            let jobTime = parseDateString(new Date(job.jobDeadline).toString());
+           
+            embed.setDescription(`**Create job completed!**\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
             msg.reply({ embeds: [embed] });
 
             updateId(msg.guild.id);    

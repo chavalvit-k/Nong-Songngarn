@@ -43,7 +43,7 @@ module.exports = {
                 newName = name;
                 name = Number(name);
                 if(Number.isInteger(name)) {
-                    embed.setDescription(`Invalid name.\nName must contain at least 1 character.\n\nYou can type "cancel" to exit this command.`);
+                    embed.setDescription(`Invalid name.\n\nName must contain at least 1 character.\n\nYou can type "cancel" to exit this command.`);
                     msg.reply({ embeds: [embed] });
                     client.commands.get("update_chain_3").execute(id, num, author, client);
                     check = 0;
@@ -61,7 +61,7 @@ module.exports = {
                 deadlineDate = new Date(dayFormated); 
 
                 if(deadlineDate.toString() === "Invalid Date"){
-                    embed.setDescription(`Invalid date.\nPlease type date in this format: <dd/mm/yyyy> <hour>\n**<hour> is optional\n\nYou can type "cancel" to exit this command.`);
+                    embed.setDescription(`Invalid date.\n\nPlease type date in this format: <dd/mm/yyyy> <hour>\n**<hour> is optional\n\nYou can type "cancel" to exit this command.`);
                     msg.reply({ embeds: [embed] });
                     client.commands.get("update_chain_3").execute(id, num, author, client);
                     check = 0;
@@ -71,7 +71,7 @@ module.exports = {
                 hour = Number(hour);
                 if(hour){
                     if(!Number.isInteger(hour) || hour < 1 || hour > 23){
-                        embed.setDescription(`Invalid hour.\nPlease type hour in 1-23 range\n\nYou can type "cancel" to exit this command.`);
+                        embed.setDescription(`Invalid hour.\n\nPlease type hour in 1-23 range\n\nYou can type "cancel" to exit this command.`);
                         msg.reply({ embeds: [embed] });
                         client.commands.get("update_chain_3").execute(id, num, author, client);
                         check = 0;
@@ -136,7 +136,7 @@ module.exports = {
             if(check) {
                 job = await jobModel.findOne({serverId: msg.guild.id, jobId: id});
                 let jobTime = parseDateString(new Date(job.jobDeadline).toString());
-                embed.setDescription(`Update job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+                embed.setDescription(`**Update job completed!**\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
                 msg.reply({ embeds: [embed] });
             }
             

@@ -11,7 +11,7 @@ module.exports = {
         const embed = new MessageEmbed().setColor("#add79b");
 
         if(!msg.member.roles.cache.some(role => role.name === "แอดมิน น้องส่งงาน") && msg.author.id !== msg.guild.ownerId){
-            embed.setDescription(`You can't access this command because you aren't server owner or you don't have "แอดมิน น้องส่งงาน" role`);
+            embed.setDescription(`You can't access this command\nBecause you aren't server owner or you don't have "แอดมิน น้องส่งงาน" role`);
             msg.reply({ embeds: [embed] });
             return ;
         }
@@ -32,9 +32,9 @@ module.exports = {
             return;
         }
 
-        let jobTime = parseDateString(new Date(job.jodDeadline).toString());
+        let jobTime = parseDateString(new Date(job.jobDeadline).toString());
         await job.deleteOne({});          
-        embed.setDescription(`Delete job completed!\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
+        embed.setDescription(`**Delete job completed!**\n\nName: ${job.jobName}\nDeadline: ${jobTime}`);
         msg.reply({ embeds: [embed] });
 
         updateId(msg.guild.id);

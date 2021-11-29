@@ -9,7 +9,7 @@ module.exports = {
         const embed = new MessageEmbed().setColor("#add79b");
 
         if(!msg.member.roles.cache.some(role => role.name === "แอดมิน น้องส่งงาน") && msg.author.id !== msg.guild.ownerId){
-            embed.setDescription(`You can't access this command because you aren't server owner or you don't have "แอดมิน น้องส่งงาน" role`);
+            embed.setDescription(`You can't access this command\nBecause you aren't server owner or you don't have "แอดมิน น้องส่งงาน" role`);
             msg.reply({ embeds: [embed] });
             return ;
         }
