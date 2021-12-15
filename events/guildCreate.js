@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const helpInformation = require("../utils/helpInformation");
 const prefixModel = require("../models/prefix.js");
+const notificationModel = require("../models/notification");
 
 module.exports = {
 	name: 'guildCreate',
@@ -19,6 +20,16 @@ module.exports = {
 		const channel = guild.channels.cache.find(channel => channel.type === 'GUILD_TEXT');
 
 		channel.send({ embeds: [embed] });
+
+		const now = new Date().getTime();
+        const notiTime = now - (now % 86400000) - 25200000;
+		let serverNotification = await notificationModel.create({
+			serverId: guild.id,
+			notificationTime: notiTime
+		});
+		serverNotification.save();
+
+		client.commands.get("_notification").execute(guild, client);
 	}
 	
 }
