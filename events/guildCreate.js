@@ -22,9 +22,11 @@ module.exports = {
 		channel.send({ embeds: [embed] });
 
 		const now = new Date().getTime();
-        const notiTime = now - (now % 86400000) - 25200000;
+        const notiTime = now - (now % 86400000) /*- 25200000*/ + 25200000 + 3900000;
 		let serverNotification = await notificationModel.create({
 			serverId: guild.id,
+			channelId: channel.id,
+			notificationSwitch: false,
 			notificationTime: notiTime
 		});
 		serverNotification.save();

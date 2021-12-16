@@ -11,11 +11,14 @@ module.exports = {
         const embed = new MessageEmbed().setColor("#add79b");
 
         const now = new Date().getTime();
-        const notiTime = (await notificationModel.find({serverId: guild.id}))[0].notificationTime;
+        const notiTime = (await notificationModel.findOne({serverId: guild.id})).notificationTime;
         let time = now < notiTime ? notiTime - now : 86400000 - (now - notiTime);
-        const channel = guild.channels.cache.find(channel => channel.type === 'GUILD_TEXT');
+        let notification = await notificationModel.findOne({serverId: guild.id});
+        let notiSwitch;
 
         async function getJob(){
+            let channel = guild.channels.cache.find(channel => channel.id === notification.channelId);
+            console.log(channel.name);
             let nextTime = now + 86400000 - (now % 86400000) - 25200001;
             let job = await jobModel.find({serverId: guild.id, jobDeadline: { $lte: nextTime }}).sort({"jobDeadline": 1});
             let lists = `**Job lists**\n\n`;
@@ -34,17 +37,24 @@ module.exports = {
             channel.send({ embeds: [embed] });
         }
 
-        async function noti(){             
+        async function noti(){  
             setTimeout(() => {
-                getJob();
-                noti();
+                notiSwitch = notification.notificationSwitch;
+                if(notiSwitch === true) {
+                    getJob();
+                    noti();
+                }
             }, time);
         }
 
         setTimeout(() => {
-            getJob();
-            time = 86400000;
-            noti(); 
+            notiSwitch = notification.notificationSwitch;
+            console.log(notiSwitch);
+            if(notiSwitch === true) {
+                getJob();
+                time = 5000;
+                noti(); 
+            }
         }, time);  
           
     }
